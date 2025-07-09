@@ -12,6 +12,8 @@ services:
       DB_MYSQL_USER: "npm"
       DB_MYSQL_PASSWORD: "npm"
       DB_MYSQL_NAME: "npm"
+      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
+      DUCKDNS_SUBDOMAIN: ${DUCKDNS_SUBDOMAIN}
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt

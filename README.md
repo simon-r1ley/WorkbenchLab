@@ -3,7 +3,19 @@ Modular Docker Compose Workbench Lab
 
 Day 0 config
 
-''mkdir nginx, openwebui, jenkins, gitlabce, gitlabrunner, grafana, influxdb, vault''
+''mkdir nginx, openwebui, jenkins, gitlabce, gitlabrunner, grafana, influxdb, vault, localcfg''
+
+
+set environment varible for nginx server 
+
+export DUCKDNS_TOKEN="your-duckdns-token"
+export DUCKDNS_SUBDOMAIN="your-subdomain"
+
+
+./duckdns_update.sh
+
+
+edit duckdns 
 
 
 
