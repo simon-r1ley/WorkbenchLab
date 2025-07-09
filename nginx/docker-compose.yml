@@ -34,4 +34,4 @@ services:
 networks:
   ngnx_network:
     driver: bridge
-    internal: true
+    internal: false
