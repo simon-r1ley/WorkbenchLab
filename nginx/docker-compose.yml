@@ -15,11 +15,11 @@ services:
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN}
       DUCKDNS_SUBDOMAIN: ${DUCKDNS_SUBDOMAIN}
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
     networks:
-      - ngnx_network
-      - bridge
+      - public
+      - private
 
   db:
     container_name: nginx-proxy-manager-db
@@ -30,11 +30,19 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      - ./mysql:/var/lib/mysql
+      - npm_db_data:/var/lib/mysql
     networks:
-      - ngnx_network
+      - private
+
+volumes:
+  npm_data:
+  npm_letsencrypt:
+  npm_db_data:
 
 networks:
-  ngnx_network:
+  public:
     driver: bridge
-    internal: false
+  private:
+    driver: bridge
+    internal: true  # makes it isolated from outside containers
+
