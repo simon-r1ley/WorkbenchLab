@@ -21,6 +21,7 @@ services:
     networks:
       - public
       - private
+      - bridge
 
   db:
     container_name: nginx-proxy-manager-db
