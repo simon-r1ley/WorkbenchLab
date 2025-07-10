@@ -19,6 +19,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     networks:
       - ngnx_network
+      - bridge
 
   db:
     container_name: nginx-proxy-manager-db
