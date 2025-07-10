@@ -1,7 +1,7 @@
 services:
   app:
     container_name: nginx-proxy-manager
-    image: 'jc21/nginx-proxy-manager:latest'
+    build: .
     restart: unless-stopped
     ports:
       - '80:80'
@@ -21,6 +21,7 @@ services:
     networks:
       - public
       - private
+
 
   db:
     container_name: nginx-proxy-manager-db
