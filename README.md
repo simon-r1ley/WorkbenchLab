@@ -1,18 +1,9 @@
 # WorkbenchLab
 Modular Docker Compose Workbench Lab
 
+Primary use with Portainer for git/ops
+
 Day 0 config
-
-''mkdir nginx, openwebui, jenkins, gitlabce, gitlabrunner, grafana, influxdb, vault, localcfg, nextcloud''
-
-
-set environment varible for nginx server 
-
-export DUCKDNS_TOKEN="your-duckdns-token"
-export DUCKDNS_SUBDOMAIN="your-subdomain"
-
-
-./duckdns_update.sh
 
 
 edit duckdns 
