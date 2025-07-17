@@ -7,5 +7,12 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
+    networks:
+      - nginx_public
+
 volumes:
   grafana-storage: {}
+
+networks:
+  nginx_public:
+    external: true
