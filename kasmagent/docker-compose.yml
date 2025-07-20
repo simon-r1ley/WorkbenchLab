@@ -1,0 +1,92 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    container_name: kasm_db
+    restart: always
+    environment:
+      POSTGRES_USER: kasm
+      POSTGRES_PASSWORD: secure_db_pass
+      POSTGRES_DB: kasmapp
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - kasm_net
+
+  redis:
+    image: redis:7
+    container_name: kasm_redis
+    restart: always
+    command: ["redis-server", "--requirepass", "secure_redis_pass"]
+    networks:
+      - kasm_net
+
+  app:
+    image: kasmweb/kasm:latest
+    container_name: kasm_app
+    restart: always
+    depends_on: [db, redis]
+    ports:
+      - "443:443"
+    environment:
+      ROLE: app
+      DB_HOST: db
+      DB_USER: kasm
+      DB_PASS: secure_db_pass
+      DB_NAME: kasmapp
+      REDIS_HOST: redis
+      REDIS_PASS: secure_redis_pass
+      ZONE: default
+    networks:
+      - kasm_net
+
+  agent:
+    image: kasmweb/kasm:latest
+    container_name: kasm_agent
+    restart: always
+    depends_on: [app]
+    ports:
+      - "8443:443"
+    environment:
+      ROLE: agent
+      MANAGER_HOSTNAME: app
+      MANAGER_TOKEN: "YOUR_MANAGER_TOKEN"
+      PUBLIC_HOSTNAME: agent.example.com
+    networks:
+      - kasm_net
+
+  guac:
+    image: kasmweb/kasm:latest
+    container_name: kasm_guac
+    restart: always
+    depends_on: [app]
+    ports:
+      - "8444:443"
+    environment:
+      ROLE: guac
+      API_HOSTNAME: app
+      PUBLIC_HOSTNAME: guac.example.com
+      REGISTRATION_TOKEN: "YOUR_SERVICE_REG_TOKEN"
+    networks:
+      - kasm_net
+
+  proxy:
+    image: kasmweb/kasm:latest
+    container_name: kasm_proxy
+    restart: always
+    depends_on: [app, agent]
+    ports:
+      - "8445:443"
+    environment:
+      ROLE: proxy
+      API_HOSTNAME: app
+      PUBLIC_HOSTNAME: proxy.example.com
+    networks:
+      - kasm_net
+
+volumes:
+  db_data:
+
+networks:
+  kasm_net:
+    driver: bridge

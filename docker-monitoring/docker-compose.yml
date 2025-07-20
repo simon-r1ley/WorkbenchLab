@@ -60,6 +60,12 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock
    command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
 
+  pyroscope:
+    image: grafana/pyroscope:main-88b2152
+    ports:
+    - 4040:4040
+    depends_on:
+      - grafana
 
   # influxdb3-core:
   #   image: influxdb:3-core
