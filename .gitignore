@@ -97,3 +97,8 @@ lerna-debug.log
 
 # === Docker ===
 localcfg/
+
+
+# === Terraform ===
+*.tfstate
+*.tfvars
