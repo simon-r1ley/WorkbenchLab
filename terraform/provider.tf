@@ -17,7 +17,7 @@ variable "proxmox_api_token_id" {
   
 }
 
-variable "proxmox_api_token" {
+variable "proxmox_api_token_secret" {
     type = string
   
 }
@@ -27,7 +27,7 @@ provider "proxmox" {
   # Configuration options
   pm_api_url = var.proxmox_api_url
   pm_api_token_id = var.proxmox_api_token_id
-  pm_api_token_secret = var.pm_api_token_secret
+  pm_api_token_secret = var.proxmox_api_token_secret
   pm_tls_insecure = true
 
 
