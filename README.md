@@ -1,13 +1,5 @@
 # WorkbenchLab
-Modular Docker Compose Workbench Lab
-
-Primary use with Portainer for git/ops
-
-Day 0 config
-
-
-edit duckdns 
-
+A variety of development environments for lab work only. Use for reference files only, non-production! 
 
 
 
