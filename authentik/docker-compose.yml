@@ -1,7 +1,7 @@
 services:
   postgresql:
-    env_file:
-    - .env
+   
+    container_name: authentik_postgresql
     environment:
       POSTGRES_DB: ${PG_DB:-authentik}
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
@@ -18,10 +18,10 @@ services:
     restart: unless-stopped
     volumes:
     - database:/var/lib/postgresql/data
-    networks:
-      - backend
+
       
   redis:
+    container_name: authentik_redis
     command: --save 60 1 --loglevel warning
     healthcheck:
       interval: 30s
@@ -35,18 +35,18 @@ services:
     restart: unless-stopped
     volumes:
     - redis:/data
-    networks:
-      - backend
+
   server:
+    container_name: authentik_server
     command: server
     depends_on:
       postgresql:
         condition: service_healthy
       redis:
         condition: service_healthy
-    env_file:
-    - .env
+   
     environment:
+      AUTHENTIK_ERROR_REPORTING__ENABLED: true
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
@@ -62,21 +62,20 @@ services:
     - ./media:/media
     - ./custom-templates:/templates
 
-    networks:
-      - frontend
-      - backend
+
 
 
   worker:
+    container_name: authentik_worker
     command: worker
     depends_on:
       postgresql:
         condition: service_healthy
       redis:
         condition: service_healthy
-    env_file:
-    - .env
+   
     environment:
+      AUTHENTIK_ERROR_REPORTING__ENABLED: true
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
@@ -91,8 +90,7 @@ services:
     - ./media:/media
     - ./certs:/certs
     - ./custom-templates:/templates
-    networks:
-      - backend
+
     
 
 
@@ -102,10 +100,5 @@ volumes:
   redis:
     driver: local
 
-networks:
-    frontend:
-      external: true
-      driver: host
-    backend:
-      external: true
-      driver: bridge
+
+     
