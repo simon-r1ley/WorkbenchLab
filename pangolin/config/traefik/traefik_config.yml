@@ -1,0 +1,37 @@
+api:
+  insecure: true
+  dashboard: true
+
+providers:
+  file:
+    directory: "/var/dynamic"
+    watch: true
+
+experimental:
+  plugins:
+    badger:
+      moduleName: "github.com/fosrl/badger"
+      version: "v1.2.0"
+
+log:
+  level: "INFO"
+  format: "common"
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    proxyProtocol:
+      trustedIPs:
+        - 0.0.0.0/0
+        - ::1/128
+    transport:
+      respondingTimeouts:
+        readTimeout: "30m"
+
+serversTransport:
+  insecureSkipVerify: true
+
+ping:
+    entryPoint: "web"

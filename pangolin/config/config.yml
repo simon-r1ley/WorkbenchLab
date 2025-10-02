@@ -1,0 +1,7 @@
+gerbil:
+    start_port: 51820
+    base_endpoint: "154.123.45.67" # REPLACE WITH YOUR IP OR DOMAIN
+
+managed:
+    id: "he4g78wevj25msf"
+    secret: "n7sd18twfko0q0vrb7wyclqzbvvnx1fqt7ezv8xewhdb9s7d"
